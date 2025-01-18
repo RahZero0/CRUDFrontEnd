@@ -11,7 +11,7 @@ const FileSharingComponent = () => {
   const fetchFiles = async () => {
     try {
         const currentTime = Date.now();
-      const response = await axios.get("/api/files", {
+      const response = await axios.get("https://crudapp-ldw7.onrender.com/api/files", {
         params: { currentTime }
       });
       setFiles(response.data.slice(0, 10)); // Limit to the first 5 files
@@ -57,7 +57,7 @@ const FileSharingComponent = () => {
   const handleDownload = async (fileName) => {
     try {
         const currentTime = Date.now();
-      const response = await axios.get(`/api/download/${fileName}`, {
+      const response = await axios.get(`https://crudapp-ldw7.onrender.com/api/download/${fileName}`, {
         params: { currentTime },
         responseType: "blob",
       });
@@ -77,7 +77,7 @@ const FileSharingComponent = () => {
   const handleDelete = async (fileName) => {
     try {
         const currentTime = Date.now();
-      await axios.delete(`/api/files/${fileName}`, {
+      await axios.delete(`https://crudapp-ldw7.onrender.com/api/files/${fileName}`, {
         params: { currentTime },
       });
       fetchFiles(); // Refresh file list
