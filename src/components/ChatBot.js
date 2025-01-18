@@ -14,6 +14,10 @@ const ChatBot = () => {
   const [isAborted, setIsAborted] = useState(false);
 
   const [apiResponse, setApiResponse] = useState({}); // Store API responses
+
+  require("dotenv").config();
+
+  const Url = process.env.WEB_URL;
   
 
   const handleQueryGemini = async (text, messageId) => {
@@ -25,7 +29,7 @@ const ChatBot = () => {
     const fetchMessages = async () => {
       try {
         const currentTime = Date.now(); // Get the current time in milliseconds
-        const response = await axios.get("https://crudapp-ldw7.onrender.com/api/messages", {
+        const response = await axios.get(`${Url}/api/messages`, {
           params: { currentTime }, // Pass the current time as a query parameter
         });
         setMessages(response.data);
@@ -55,7 +59,7 @@ const ChatBot = () => {
       return;
     } else {
       axios
-        .post("https://crudapp-ldw7.onrender.com/api/messages", message)
+        .post(`${Url}/api/messages`, message)
         .then((response) => {
           setMessages([...messages, response.data]);
           setNewMessage("");
@@ -86,7 +90,7 @@ const ChatBot = () => {
     setMessages(updatedMessages);
 
     axios
-      .patch(`https://crudapp-ldw7.onrender.com/api/messages/${id}`, { correctness: parseInt(value) || "" })
+      .patch(`${Url}/api/messages/${id}`, { correctness: parseInt(value) || "" })
       .then(() => {
         const pinned = updatedMessages.filter((msg) => msg.correctness === 100);
         setPinnedMessages(pinned);
@@ -107,7 +111,7 @@ const ChatBot = () => {
 
   const handleTitleSubmit = (messageId) => {
     axios
-      .patch(`https://crudapp-ldw7.onrender.com/api/messages/${messageId}`, { title })
+      .patch(`${Url}/api/messages/${messageId}`, { title })
       .then((response) => {
         const updatedMessages = messages.map((msg) =>
           msg._id === messageId ? { ...msg, title: response.data.title } : msg
@@ -123,7 +127,7 @@ const ChatBot = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://crudapp-ldw7.onrender.com/api/messages/${id}`)
+      .delete(`${Url}/api/messages/${id}`)
       .then(() => {
         // Update the local messages state to remove the deleted message
         setMessages(messages.filter((msg) => msg._id !== id));
