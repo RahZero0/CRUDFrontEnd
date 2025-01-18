@@ -14,10 +14,8 @@ const ChatBot = () => {
   const [isAborted, setIsAborted] = useState(false);
 
   const [apiResponse, setApiResponse] = useState({}); // Store API responses
-
-  require("dotenv").config();
-
-  const Url = process.env.WEB_URL;
+  
+  const Url = "https://crudapp-ldw7.onrender.com";
 
   const handleQueryGemini = async (text, messageId) => {
     const answer = await queryGemini(text);
