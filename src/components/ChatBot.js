@@ -18,7 +18,6 @@ const ChatBot = () => {
   require("dotenv").config();
 
   const Url = process.env.WEB_URL;
-  
 
   const handleQueryGemini = async (text, messageId) => {
     const answer = await queryGemini(text);

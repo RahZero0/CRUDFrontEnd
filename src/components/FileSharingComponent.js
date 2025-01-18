@@ -7,6 +7,11 @@ const FileSharingComponent = () => {
   const [fileInput, setFileInput] = useState(null);
   const [fileName, setFileName] = useState("");
 
+  
+  require("dotenv").config();
+
+  const Url = process.env.WEB_URL;
+
   // Fetch files from the server
   const fetchFiles = async () => {
     try {
